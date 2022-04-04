@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: server-deployment
+
+spec:
+  replicas: 1
+  selector:
+   matchLabels:
+     component: api-server
+  template:
+    metadata:
+      labels:
+        component: api-server
+    spec:
+     containers:
+      - name: api-server-container
+        image: p2pdops/multi-container-server
+        ports:
+         - containerPort: 5000
+        env:
+           - name: REDIS_URL
+             value: redis://redis-cluster-ip-service:6379
+           - name: POSTGRES_URL
+             valueFrom:
+               secretKeyRef:
+                 name: postgres-url-secret
+                 key: POSTGRES_URL

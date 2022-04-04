@@ -3,6 +3,7 @@ const keys = require('./keys');
 const client = redis.createClient({
     url: keys.redisURL,
 });
+
 const publisher = client.duplicate();
 
 const fib = (index) => {
