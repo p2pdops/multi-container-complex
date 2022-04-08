@@ -1,0 +1,22 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+
+metadata:
+  name: dtransfer.zerobill.app
+
+spec:
+  secretName: letsencrypt-prod
+
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+
+  commonName: dtransfer.zerobill.app
+
+  dnsNames:
+    - dtransfer.zerobill.app
+
+  # The certificate will be valid for two years.
+  duration: 8760h0m0s
+  renewBefore: 24h0m0s
+   
