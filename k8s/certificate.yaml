@@ -14,3 +14,21 @@ metadata:
 spec:
   domains:
     - dv2.prod.zerobill.app
+
+## Prod ssl certificates
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: v1-certificate-prod
+spec:
+  domains:
+    - transfer.zerobill.app
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: v2-certificate-prod
+spec:
+  domains:
+    - v2.prod.zerobill.app
