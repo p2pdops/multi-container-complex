@@ -1,22 +1,16 @@
-apiVersion: cert-manager.io/v1
-kind: Certificate
+  apiVersion: networking.gke.io/v1
+  kind: ManagedCertificate
+  metadata:
+    name: v1-certificate
+  spec:
+    domains:
+      - dtransfer.zerobill.app
 
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
 metadata:
-  name: dtransfer.zerobill.app
-
+  name: v2-certificate
 spec:
-  secretName: letsencrypt-prod
-
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
-
-  commonName: dtransfer.zerobill.app
-
-  dnsNames:
-    - dtransfer.zerobill.app
-
-  # The certificate will be valid for two years.
-  duration: 8760h0m0s
-  renewBefore: 24h0m0s
-   
+  domains:
+    - dv2.prod.zerobill.app

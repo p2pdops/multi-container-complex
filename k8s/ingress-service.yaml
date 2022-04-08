@@ -4,26 +4,35 @@ kind: Ingress
 metadata:
   name: ingress-service-web
   annotations:
-    nginx.ingress.kubernetes.io/scheme: internal
-    nginx.ingress.kubernetes.io/target-type: ip
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    networking.gke.io/managed-certificates: zerobill-certificate
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    networking.gke.io/managed-certificates: "v1-certificate,v2-certificate"
 
 spec:
-  tls:
-  - hosts:
-    - dtransfer.zerobill.app
-    secretName: letsencrypt-prod
-
   ingressClassName: nginx
 
   rules:
     - host: dtransfer.zerobill.app
       http:
         paths:
-          - path: /*(/|$)(.*$)
+          - path: /
+            pathType: "Prefix"
+            backend:
+              service:
+                name: client-cluster-ip-service
+                port: 
+                  number: 3000
+
+          - path: /api(/|$)(.*$)
+            pathType: "Prefix"
+            backend:
+              service:
+                name: server-cluster-ip-service
+                port: 
+                  number: 5000
+
+    - host: dv2.prod.zerobill.app
+      http:
+        paths:
+          - path: /
             pathType: "Prefix"
             backend:
               service:
