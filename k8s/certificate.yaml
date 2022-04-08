@@ -5,7 +5,6 @@ metadata:
 spec:
   domains:
     - dtransfer.zerobill.app
-    - zeroill.app
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
@@ -14,8 +13,6 @@ metadata:
 spec:
   domains:
     - dv2.prod.zerobill.app
-    - prod.zeroill.app
-    - zeroill.app
 ## Prod ssl certificates
 ---
 apiVersion: networking.gke.io/v1
@@ -25,7 +22,6 @@ metadata:
 spec:
   domains:
     - transfer.zerobill.app
-    - zeroill.app
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
@@ -35,4 +31,3 @@ spec:
   domains:
     - v2.prod.zerobill.app
     - prod.zeroill.app
-    - zeroill.app
