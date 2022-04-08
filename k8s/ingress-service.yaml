@@ -10,7 +10,6 @@ metadata:
     networking.gke.io/managed-certificates: zerobill-certificate
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 
 spec:
   tls:
@@ -19,7 +18,7 @@ spec:
     secretName: letsencrypt-prod
 
   ingressClassName: nginx
-  
+
   rules:
     - host: dtransfer.zerobill.app
       http:
