@@ -23,7 +23,4 @@ spec:
            - name: REDIS_URL
              value: redis://redis-cluster-ip-service:6379
            - name: POSTGRES_URL
-             valueFrom:
-               secretKeyRef:
-                 name: postgres-url-secret
-                 key: POSTGRES_URL
+             value: postgres://postgres:postgres@postgres-cluster-ip-service:5432

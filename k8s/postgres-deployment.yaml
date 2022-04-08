@@ -15,10 +15,10 @@ spec:
         component: postgres-server
     spec:
       
-      volumes:
-        - name: postgres-storage-volume
-          persistentVolumeClaim:
-            claimName: database-persistent-volume-claim
+      # volumes:
+      #   - name: postgres-storage-volume
+      #     persistentVolumeClaim:
+      #       claimName: database-persistent-volume-claim
       
       containers:
         - name: postgres-server-container
@@ -27,9 +27,9 @@ spec:
           ports:
             - containerPort: 5432 
           
-          volumeMounts:
-            - name: postgres-storage-volume
-              mountPath: /var/lib/postgresql/data
+          # volumeMounts:
+          #   - name: postgres-storage-volume
+          #     mountPath: /var/lib/postgresql/data
 
           env:
             - name: POSTGRES_USER
