@@ -5,7 +5,7 @@ metadata:
   name: ingress-service-web
   annotations:
     networking.gke.io/managed-certificates: "v1-certificate,v2-certificate"
-
+    kubernetes.io/ingress.global-static-ip-name: "k8s-load-balancer-ip"
 spec:
   ingressClassName: nginx
 
