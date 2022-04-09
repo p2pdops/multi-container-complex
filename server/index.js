@@ -70,5 +70,8 @@ router.post("/values", async (req, res) => {
 });
 
 app.use('/api', router);
+app.use('/', (req, res) => {
+    res.send("Yeh! You're at the root!");
+});
 
 app.listen(5000, err => { console.log("Listening"); });
