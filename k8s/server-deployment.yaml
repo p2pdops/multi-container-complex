@@ -17,6 +17,7 @@ spec:
      containers:
       - name: api-server-container
         image: p2pdops/multi-container-server:latest
+        imagePullPolicy: Always
         ports:
          - containerPort: 5000
         env:
