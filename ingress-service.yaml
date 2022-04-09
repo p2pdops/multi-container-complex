@@ -9,11 +9,11 @@ metadata:
 
 spec:
   rules:
-    - host: test.zerobill.app
-      http:
+    # - host: test.zerobill.app
+    - http:
         paths:
-          - path: /*
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: client-cluster-ip-service
@@ -21,7 +21,7 @@ spec:
                   number: 3000
 
           - path: /api
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: server-cluster-ip-service

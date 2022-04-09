@@ -40,22 +40,23 @@ redisPublisher.connect().then(() => {
 
 
 // Express route handlers
+const router = express.Router()
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     res.send("Hi");
 });
 
-app.get("/values/all", async (req, res) => {
+router.get("/values/all", async (req, res) => {
     const values = await pgClient.query("SELECT * from values");
     res.send(values.rows);
 });
 
-app.get("/values/current", async (req, res) => {
+router.get("/values/current", async (req, res) => {
     const values = await redisClient.hGetAll("values");
     res.send(values);
 });
 
-app.post("/values", async (req, res) => {
+router.post("/values", async (req, res) => {
     const index = req.body.index;
     if (+index > 40) return res.status(422).send("Index too high");
     await redisClient.hSet("values", index, "Nothing yet!");
@@ -67,5 +68,7 @@ app.post("/values", async (req, res) => {
         res.send({ working: true });
     }
 });
+
+app.use('/api', router);
 
 app.listen(5000, err => { console.log("Listening"); });

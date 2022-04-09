@@ -16,7 +16,7 @@ spec:
     spec:
      containers:
       - name: api-server-container
-        image: p2pdops/multi-container-server
+        image: p2pdops/multi-container-server:latest
         ports:
          - containerPort: 5000
         env:
