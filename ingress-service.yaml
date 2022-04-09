@@ -12,6 +12,14 @@ spec:
     # - host: test.zerobill.app
     - http:
         paths:
+          - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: server-cluster-ip-service
+                port: 
+                  number: 5000
+
           - path: /
             pathType: Prefix
             backend:
@@ -20,10 +28,3 @@ spec:
                 port: 
                   number: 3000
 
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: server-cluster-ip-service
-                port: 
-                  number: 5000
