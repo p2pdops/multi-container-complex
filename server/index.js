@@ -38,25 +38,25 @@ redisPublisher.connect().then(() => {
     console.log("redisPublisher: Connected to Redis");
 });
 
-
-// Express route handlers
-const router = express.Router()
-
-router.get("/", (req, res) => {
-    res.send("Hi");
+app.use('*', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+    console.log("Request received", req.method, req.path);
 });
 
-router.get("/values/all", async (req, res) => {
+
+app.get("/values/all", async (req, res) => {
     const values = await pgClient.query("SELECT * from values");
     res.send(values.rows);
 });
 
-router.get("/values/current", async (req, res) => {
+app.get("/values/current", async (req, res) => {
     const values = await redisClient.hGetAll("values");
     res.send(values);
 });
 
-router.post("/values", async (req, res) => {
+app.post("/values", async (req, res) => {
     const index = req.body.index;
     if (+index > 40) return res.status(422).send("Index too high");
     await redisClient.hSet("values", index, "Nothing yet!");
@@ -69,7 +69,7 @@ router.post("/values", async (req, res) => {
     }
 });
 
-app.use('/api', router);
+// app.use('/api', router);
 app.use('/', (req, res) => {
     res.send("Yeh! You're at the root!");
 });

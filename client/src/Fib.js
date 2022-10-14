@@ -20,7 +20,7 @@ class Fib extends Component {
 
     async getIndexes() {
         const seenIndexes = await axios.get('/api/values/all');
-        this.setState({ seenIndexes: seenIndexes.data });
+        this.setState({ seenIndexes: seenIndexes.data || [] });
     }
 
     handleSubmit = async (event) => {
@@ -31,9 +31,9 @@ class Fib extends Component {
         this.setState({ index: '' });
     }
 
-    renderSeenIndexes() {
-        return this.state.seenIndexes.map(({ number }) => number).join(', ');
-    }
+    // renderSeenIndexes() {
+    //     return (this.state.seenIndexes || []).map(({ number }) => number).join(', ');
+    // }
 
     renderValues() {
         const entries = [];
@@ -44,12 +44,13 @@ class Fib extends Component {
                 </div>
             );
         }
-        return entries;
+
+        return entries.length > 0 ? entries : 'No values yet';
     }
 
     render() {
         return (
-            <div>
+            <div style={{ padding: '8rem' }}>
                 <form onSubmit={this.handleSubmit}>
                     <label>Enter your index:</label>
                     <input
@@ -58,8 +59,8 @@ class Fib extends Component {
                     />
                     <button>Submit</button>
                 </form>
-                <h3>Indexes I have seen:</h3>
-                {this.renderSeenIndexes()}
+                {/* <h3>Indexes I have seen:</h3> */}
+                {/* {this.renderSeenIndexes()} */}
                 <h3>Calculated values:</h3>
                 {this.renderValues()}
             </div>

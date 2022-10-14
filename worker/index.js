@@ -16,7 +16,12 @@ const fib = (index) => {
     await publisher.connect();
     console.log('redis:connected:successfully');
     client.subscribe('insert', async (message, channel) => {
-        console.log('Received message:', channel, message);
-        await publisher.hSet('values', message, fib(message));
+        const index = message;
+        console.log('Received message:', channel, index);
+        const fibValue = fib(index);
+
+        setTimeout(() => {
+            publisher.hSet('values', index, fibValue);
+        }, 6000);;
     });
 })();
