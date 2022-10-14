@@ -38,16 +38,20 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         await delay(2500);
         await publisher.hSet("values", index, `Worker is Processing`);
         const fibValue = fib(index);
-        await delay(6500);
+        await delay(5000);
         console.log('Setting value:', index, fibValue);
         publisher.hSet('values', index, `Value is ${index} is ${fibValue}`);
-        await pgClient.query(`
-            INSERT INTO values(number,value)
-            VALUES(${+index}, ${fibValue})
-            ON CONFLICT (number)
-            DO
-            UPDATE SET value = ${fibValue}
-            `);
+        try {
+            await pgClient.query(`
+                INSERT INTO values(number,value)
+                VALUES(${+index}, ${fibValue})
+                ON CONFLICT (number)
+                DO
+                UPDATE SET value = ${fibValue}
+                `);
+        } catch (e) {
+            console.error("Value aleardy exist");
+        }
         console.log('Value set:', index, fibValue);
     });
 })();

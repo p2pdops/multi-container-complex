@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import OtherPage from './OtherPage';
-import Fib from './Fib';
+import Main from './Main';
 import React, { Fragment } from 'react';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <Fragment>
         <Routes>
           <Route path="/otherpage" element={<OtherPage />} />
-          <Route path="/" element={<Fib />} />
+          <Route path="/" element={<Main />} />
         </Routes>
       </Fragment>
     </Router>

@@ -12,7 +12,7 @@ services:
         image: redis:latest
 
     server:
-        restart: unless-stopped
+        restart: on-failure
         build:
             context: ./server
             dockerfile: Dockerfile.dev
@@ -32,6 +32,7 @@ services:
             - ./client:/app
 
     worker:
+        restart: on-failure
         build:
             context: ./worker
             dockerfile: Dockerfile.dev
