@@ -15,9 +15,9 @@ const pgClient = new Pool({
 })
 pgClient.on("error", () => console.log("Lost PG connection"));
 
-pgClient.query("CREATE TABLE IF NOT EXISTS values (number INT PRIMARY KEY)", (err, res) => {
+pgClient.query("CREATE TABLE IF NOT EXISTS values (number INT PRIMARY KEY, value BIGINT)", (err, res) => {
     if (err) {
-        console.log(err);
+        console.error('Cannot create values', err);
     } else {
         console.log("Values table created");
     }
@@ -46,20 +46,19 @@ app.use('*', (req, res, next) => {
 });
 
 
-app.get("/values/all", async (req, res) => {
-    const values = await pgClient.query("SELECT * from values");
+app.get("*/values/all", async (req, res) => {
+    const values = await pgClient.query("SELECT * from public.values");
     res.send(values.rows);
 });
 
-app.get("/values/current", async (req, res) => {
+app.get("*/values/current", async (req, res) => {
     const values = await redisClient.hGetAll("values");
     res.send(values);
 });
 
-app.post("/values", async (req, res) => {
+app.post("*/values", async (req, res) => {
     const index = req.body.index;
-    if (+index > 40) return res.status(422).send("Index too high");
-    await redisClient.hSet("values", index, "Nothing yet!");
+    await redisClient.hSet("values", index, `Waiting for computation`);
     await redisPublisher.publish("insert", index);
     try {
         await pgClient.query("INSERT INTO values(number) VALUES($1)", [index]);
